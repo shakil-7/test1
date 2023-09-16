@@ -21,6 +21,7 @@ jobs:
         run: |
           # Check if Java 11 is already cached; if not, install it
           if [ ! -d ~/.cache/openjdk11 ]; then
+            echo "not installed"
             sudo apt-get update -q
             sudo apt-get install -y openjdk-11-jdk
           fi
