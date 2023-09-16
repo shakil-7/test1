@@ -14,13 +14,14 @@ jobs:
       - name: Cache Java 11
         uses: actions/cache@v2
         with:
-          path: ~/.cache/openjdk11
-          key: java11-${{ runner.os }}
+          path: ~/.cache/java-11
+          key: java-11
 
       - name: Set up Java 11
         run: |
           # Check if Java 11 is already cached; if not, install it
-          if [ ! -d ~/.cache/java11-Linux ]; then
+          echo $( 
+          if [ ! ~/.cache/java-11 ]; then
             echo "not installed"
             sudo apt-get update -q
             sudo apt-get install -y openjdk-11-jdk
@@ -30,18 +31,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.github/super-linter
-          key: super-linter-${{ runner.os }}-v4
+          key: super-linter-v4
           
-      # - name: Set up Java 11
-        # run: |
-          # sudo apt-get update -q
-          # sudo apt-get install -y openjdk-11-jdk
-
-      # - name: Run an user define shell script
-      #   run: |
-      #     script_path="${GITHUB_WORKSPACE}/script.sh"
-      #     chmod +x script.sh
-      #     ./script.sh
 
       - name: Run Super-Linter
         uses: github/super-linter@v4
