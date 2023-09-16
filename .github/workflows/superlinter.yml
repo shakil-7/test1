@@ -6,9 +6,26 @@ jobs:
   super-lint:
     name: Lint code base
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up Java 11
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y openjdk-11-jdk
+          java -version
+
+      - name: Check Java 11 Version
+        run: |
+          java -version
+          if [[ $(java -version 2>&1) == *"openjdk 11"* ]]; then
+            echo "Java 11 is installed."
+          else
+            echo "Java 11 is not installed."
+            exit 1
+          fi
 
       - name: Run Super-Linter
         uses: github/super-linter@v4
