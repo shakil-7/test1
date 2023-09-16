@@ -17,15 +17,11 @@ jobs:
           sudo apt-get install -y openjdk-11-jdk
           java -version
 
-      - name: Check Java 11 Version
+      - name: Run an user define shell script
         run: |
-          java -version
-          if [[ $(java -version 2>&1) == *"openjdk 11"* ]]; then
-            echo "Java 11 is installed."
-          else
-            echo "Java 11 is not installed."
-            exit 1
-          fi
+          script_path="${GITHUB_WORKSPACE}/script.sh"
+          chmod +x script.sh
+          ./script.sh
 
       - name: Run Super-Linter
         uses: github/super-linter@v4
