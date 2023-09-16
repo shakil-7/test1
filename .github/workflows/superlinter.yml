@@ -11,17 +11,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Cache Java 11
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/openjdk11
+          key: java11-${{ runner.os }}
+
       - name: Set up Java 11
         run: |
-          sudo apt-get update -q
-          sudo apt-get install -y openjdk-11-jdk
-          java -version
+          # Check if Java 11 is already cached; if not, install it
+          if [ ! -d ~/.cache/openjdk11 ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y openjdk-11-jdk
+          fi
+          
+      # - name: Set up Java 11
+        # run: |
+          # sudo apt-get update -q
+          # sudo apt-get install -y openjdk-11-jdk
 
-      - name: Run an user define shell script
-        run: |
-          script_path="${GITHUB_WORKSPACE}/script.sh"
-          chmod +x script.sh
-          ./script.sh
+      # - name: Run an user define shell script
+      #   run: |
+      #     script_path="${GITHUB_WORKSPACE}/script.sh"
+      #     chmod +x script.sh
+      #     ./script.sh
 
       - name: Run Super-Linter
         uses: github/super-linter@v4
