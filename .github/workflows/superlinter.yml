@@ -14,28 +14,8 @@ jobs:
       - name: Cache Java 11
         uses: actions/cache@v2
         with:
-          path: ~/.cache/java-11
-          key: java-11
-
-      - name: Set up Java 11
-        run: |
-          # Check if Java 11 is already cached; if not, install it
-          if [ ! -d "~/.cache/java-11" ]; then
-            uses: actions/cache@v2
-            with:
-              path: ~/.cache/java-11
-              key: java-11
-          fi
-
-      # - name: Cache Super-Linter
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/.github/super-linter
-      #     key: super-linter
-          
-
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          cache: java11
+          run: |
+            sudo apt-get update -q
+            sudo apt-get install -y openjdk-11-jdk
+            
