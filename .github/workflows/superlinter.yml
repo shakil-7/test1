@@ -25,19 +25,23 @@ jobs:
             sudo apt-get install -y openjdk-11-jdk
           fi
           
-      # - name: Set up Java 11
-        # run: |
-          # sudo apt-get update -q
-          # sudo apt-get install -y openjdk-11-jdk
+      - name: Cache Super-Linter
+        uses: actions/cache@v2
+        with:
+          path: ~/.super-linter
+          key: super-linter-${{ runner.os }}-v4  # Unique cache key for Super-Linter
 
-      # - name: Run an user define shell script
-      #   run: |
-      #     script_path="${GITHUB_WORKSPACE}/script.sh"
-      #     chmod +x script.sh
-      #     ./script.sh
+      - name: Install and Run Super-Linter
+        run: |
+          # Check if Super-Linter is already cached; if not, install it
+          if [ ! -d ~/.super-linter ]; then
+            git clone https://github.com/github/super-linter.git ~/.super-linter
+          fi
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
+          # Run Super-Linter
+          cd ~/.super-linter
+          ./run.sh
+          
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
