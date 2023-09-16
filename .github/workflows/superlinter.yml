@@ -25,6 +25,12 @@ jobs:
             sudo apt-get update -q
             sudo apt-get install -y openjdk-11-jdk
           fi
+
+      - name: Cache Super-Linter
+        uses: actions/cache@v2
+        with:
+          path: ~/.github/super-linter
+          key: super-linter-${{ runner.os }}-v4
           
       # - name: Set up Java 11
         # run: |
