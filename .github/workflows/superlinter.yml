@@ -21,9 +21,10 @@ jobs:
         run: |
           # Check if Java 11 is already cached; if not, install it
           if [ ! -d "~/.cache/java-11" ]; then
-            echo "not installed"
-            sudo apt-get update -q
-            sudo apt-get install -y openjdk-11-jdk
+            uses: actions/cache@v2
+            with:
+              path: ~/.cache/java-11
+              key: java-11
           fi
 
       # - name: Cache Super-Linter
