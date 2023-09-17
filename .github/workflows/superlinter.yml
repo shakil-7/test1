@@ -31,7 +31,7 @@ jobs:
       - name: Include sub-workflow
         uses: actions/checkout@v2
         with:
-          repository: ${{ github.actor }}/ ${{ github.repository }}
+          repository: ${{ github.repository }}
           ref: main
           path: .github/workflows/java-install.yml
 
