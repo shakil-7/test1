@@ -1,20 +1,26 @@
-name: Caching Primes
+name: Super_Linter
 
 on: push
 
 jobs:
-  build:
+  super-lint:
+    name: Lint code base
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: actions/checkout@v3
-    
-      - uses: actions/cache@v3
-        id: cache
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache Java 11
+        uses: actions/cache@v2
         with:
-          path: ~/.test
-          key: ${{ runner.os }}-"test" }}
-    
-      - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: echo "hello there"
+          path: ~/.cache/openjdk11
+          key: java11-${{ runner.os }}
+
+      - name: Set up Java 11
+        run: |
+          # Check if Java 11 is already cached; if not, install it
+          if [ ! -d ~/.cache/openjdk11 ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y openjdk-11-jdk
+          fi
