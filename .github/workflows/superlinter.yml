@@ -80,6 +80,9 @@ jobs:
               -p $PORT_WEB_UI:$PORT_WEB_UI \
               localstack/localstack:0.12.6
 
+      - name: fkdlasjfkl
+        run: docker ps
+
           
       # - name: Start LocalStack
       #   if: steps.cache-aws-localstack.outputs.cache-hit != 'true'
