@@ -65,20 +65,35 @@ jobs:
         with:
           path:  ~/.cache/aws-localstack
           key: localstack
-          
-      - name: Start LocalStack
-        if: steps.cache-aws-localstack.outputs.cache-hit != 'true'
-        run: |
-            pip install localstack awscli-local[ver1] # install LocalStack cli and awslocal
 
-      - name: Run some Tests against LocalStack
+      - name: run localstack
         run: |
-            docker pull localstack/localstack         # Make sure to pull the latest version of the image
-            localstack start -d                       # Start LocalStack in the background
-            echo "Waiting for LocalStack startup..."  # Wait 30 seconds for the LocalStack container
-            localstack wait -t 30                     # to become ready before timing out 
-            echo "Startup complete"
+          #!/bin/bash
+          # Set environment variables if needed
+          export LOCALSTACK_DOCKER_NAME="test";
+          export PORT_WEB_UI=${PORT_WEB_UI-8060}
+          
+          # Run LocalStack container
+          docker run -d \
+              --name $LOCALSTACK_DOCKER_NAME \
+              -p 4566-4599:4566-4599 \
+              -p $PORT_WEB_UI:$PORT_WEB_UI \
+              localstack/localstack:0.12.6
+
+          
+      # - name: Start LocalStack
+      #   if: steps.cache-aws-localstack.outputs.cache-hit != 'true'
+      #   run: |
+      #       pip install localstack awscli-local[ver1] # install LocalStack cli and awslocal
+
+      # - name: Run some Tests against LocalStack
+      #   run: |
+      #       docker pull localstack/localstack         # Make sure to pull the latest version of the image
+      #       localstack start -d                       # Start LocalStack in the background
+      #       echo "Waiting for LocalStack startup..."  # Wait 30 seconds for the LocalStack container
+      #       localstack wait -t 30                     # to become ready before timing out 
+      #       echo "Startup complete"
             
-            awslocal s3 mb s3://test
-            awslocal s3 ls
-            echo "Test Execution complete!"   
+      #       awslocal s3 mb s3://test
+      #       awslocal s3 ls
+      #       echo "Test Execution complete!"   
