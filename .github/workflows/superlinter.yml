@@ -14,7 +14,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache-java
         with:
-          path: ~/.cache/
+          path: ~/.cache/java-11
           key: java-11
     
       - name: Install Java-11
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache-maven
         with:
-          path: ~/.cache/
+          path: ~/.cache/maven
           key: maven
     
       - name: Install Maven
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache-docker
         with:
-          path: ~/.cache/
+          path: ~/.cache/docker
           key: maven
     
       - name: Install docker
