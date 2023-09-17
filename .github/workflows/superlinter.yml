@@ -19,21 +19,7 @@ jobs:
           path: |
             .github/workflows/java-install.yml
             .github/workflows/maven.yml
-
-      # install docker
-      - name: Check if Docker is cached
-        id: cache-docker
-        uses: actions/cache@v2
-        with:
-          path:  ~/.cache/docker
-          key: docker-${{ runner.os }}
-  
-      - name: Install Docker
-        if: steps.cache-docker.outputs.cache-hit != 'true'
-        uses: docker-practice/actions-setup-docker@master
-  
-      - name: Checking Docker Version
-        run: sudo docker --version
+            .github/workflows/docker.yml
 
     # install aws localstack
       - name: Check if aws localstack is cached
