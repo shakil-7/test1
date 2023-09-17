@@ -59,7 +59,15 @@ jobs:
         run: sudo docker --version
 
     # install aws localstack
+      - name: Check if aws localstack is cached
+        id: cache-aws-localstack
+        uses: actions/cache@v2
+        with:
+          path:  ~/.cache/docker
+          key: docker-${{ runner.os }}
+          
       - name: Start LocalStack
+        if: steps.cache-aws-localstack.outputs.cache-hit != 'true'
         run: |
             pip install localstack awscli-local[ver1] # install LocalStack cli and awslocal
             docker pull localstack/localstack         # Make sure to pull the latest version of the image
