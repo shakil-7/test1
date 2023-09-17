@@ -9,7 +9,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-    
+
+    # install java-11 if not cached already
       - uses: actions/cache@v2
         id: cache-java
         with:
@@ -25,7 +26,7 @@ jobs:
       - name: Checking Java Version
         run: java -version
 
-
+    # install maven if not cached already
       - uses: actions/cache@v2
         id: cache-maven
         with:
@@ -39,3 +40,19 @@ jobs:
 
       - name: Checking Maven Version
         run: mvn -version
+
+    # install docker if not cached already
+      - uses: actions/cache@v2
+        id: cache-docker
+        with:
+          path: ~/.cache/
+          key: maven
+    
+      - name: Install docker
+        if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y docker.io
+
+      - name: Checking Docker Version
+        run: docker -version
