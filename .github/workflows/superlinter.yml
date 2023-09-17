@@ -10,8 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-    # install java-11 if not cached already
-      - uses: actions/cache@v2
+      # install java-11 if not cached already
+      - name: Check if java-11 is already cached
+        uses: actions/cache@v2
         id: cache-java
         with:
           path: ~/.cache/java-11
@@ -26,8 +27,9 @@ jobs:
       - name: Checking Java Version
         run: java -version
 
-    # install maven if not cached already
-      - uses: actions/cache@v2
+      # install maven if not cached already
+      - name: Check if maven is already cached
+        uses: actions/cache@v2
         id: cache-maven
         with:
           path: ~/.cache/maven
@@ -41,14 +43,15 @@ jobs:
       - name: Checking Maven Version
         run: mvn -version
 
-      - name: Cache Docker images
+      # install docker
+      - name: Check if Docker is cached
         id: cache-docker
         uses: actions/cache@v2
         with:
           path:  ~/.cache/docker
           key: docker-${{ runner.os }}
   
-      - name: Setup Docker
+      - name: Install Docker
         if: steps.cache-docker.outputs.cache-hit != 'true'
         uses: docker-practice/actions-setup-docker@master
   
