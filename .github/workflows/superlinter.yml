@@ -31,7 +31,7 @@ jobs:
       - name: Include sub-workflow
         uses: actions/checkout@v2
         with:
-          repository: test1
+          repository: "${GITHUB_WORKSPACE}/test1"
           ref: main
           path: .github/workflows/java-install.yml
 
