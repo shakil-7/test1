@@ -10,46 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # # install java-11 if not cached already
-      # - name: Check if java-11 is already cached
-      #   uses: actions/cache@v2
-      #   id: cache-java
-      #   with:
-      #     path: ~/.cache/java-11
-      #     key: java-11
-    
-      # - name: Install Java-11
-      #   if: steps.cache-java.outputs.cache-hit != 'true'
-      #   run: |
-      #     sudo apt-get update -q
-      #     sudo apt-get install -y openjdk-11-jdk
-
-      # - name: Checking Java Version
-      #   run: java -version
-
       # Include another YAML file
       - name: Include sub-workflow
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
           ref: main
-          path: .github/workflows/java-install.yml
-
-      # install maven if not cached already
-      - name: Check if maven is already cached
-        uses: actions/cache@v2
-        id: cache-maven
-        with:
-          path: ~/.cache/maven
-          key: maven
-    
-      - name: Install Maven
-        if: steps.cache-maven.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get install -y maven
-
-      - name: Checking Maven Version
-        run: mvn -version
+          path: |
+            .github/workflows/java-install.yml
+            .github/workflows/maven.yml
 
       # install docker
       - name: Check if Docker is cached
