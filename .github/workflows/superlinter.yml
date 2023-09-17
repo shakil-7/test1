@@ -1,5 +1,5 @@
 
-name: Caching Primes
+name: Caching java
 
 on: push
 
@@ -14,8 +14,13 @@ jobs:
         id: cache
         with:
           path: ~/.cache/test
-          key: ${{ runner.os }}-test }}
+          key: java-11
     
-      - name: Install Dependencies
+      - name: Install Java-11
         if: steps.cache.outputs.cache-hit != 'true'
-        run: echo "hello there"
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y openjdk-11-jdk
+
+      - name: Checking Java Version
+        run: java -version
