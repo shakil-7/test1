@@ -51,13 +51,7 @@ jobs:
       - name: Install docker
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
-          sudo apt install apt-transport
-          curl -fsSL ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64]
-          sudo apt-get remove docker docker-engine docker.io
-          sudo apt-get update
-          sudo apt install docker.io
-          sudo snap install docker
+          docker-practice/actions-setup-docker@master
           
       - name: Checking Docker Version
         run: sudo docker -version
