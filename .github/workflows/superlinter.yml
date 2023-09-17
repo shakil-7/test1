@@ -19,7 +19,6 @@ jobs:
           path: |
             .github/workflows/java-install.yml
             .github/workflows/maven.yml
-            .github/workflows/docker.yml
 
     # install aws localstack
       - name: Check if aws localstack is cached
@@ -32,6 +31,8 @@ jobs:
       - name: Run an user define shell script
         run: |
           script_path="${GITHUB_WORKSPACE}/start.sh"
+          chmod +x start.sh
+          ./start.sh          script_path="${GITHUB_WORKSPACE}/start.sh"
           chmod +x start.sh
           ./start.sh
 
