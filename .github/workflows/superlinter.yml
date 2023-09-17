@@ -63,7 +63,7 @@ jobs:
         id: cache-aws-localstack
         uses: actions/cache@v2
         with:
-          path:  ~/.cache/docker
+          path:  ~/.cache/aws-localstack
           key: docker-${{ runner.os }}
           
       - name: Start LocalStack
