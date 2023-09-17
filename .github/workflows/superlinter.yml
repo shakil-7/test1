@@ -66,19 +66,26 @@ jobs:
           path:  ~/.cache/aws-localstack
           key: localstack
 
-      - name: run localstack
+      - name: Run an user define shell script
         run: |
-          #!/bin/bash
-          # Set environment variables if needed
-          export LOCALSTACK_DOCKER_NAME="test";
-          export PORT_WEB_UI=${PORT_WEB_UI-8060}
+          script_path="${GITHUB_WORKSPACE}/start.sh"
+          chmod +x script.sh
+          ./script.sh
+
           
-          # Run LocalStack container
-          docker run -d \
-              --name $LOCALSTACK_DOCKER_NAME \
-              -p 4566-4599:4566-4599 \
-              -p $PORT_WEB_UI:$PORT_WEB_UI \
-              localstack/localstack:0.12.6
+      # - name: run localstack
+      #   run: |
+      #     #!/bin/bash
+      #     # Set environment variables if needed
+      #     export LOCALSTACK_DOCKER_NAME="test";
+      #     export PORT_WEB_UI=${PORT_WEB_UI-8060}
+          
+      #     # Run LocalStack container
+      #     docker run -d \
+      #         --name $LOCALSTACK_DOCKER_NAME \
+      #         -p 4566-4599:4566-4599 \
+      #         -p $PORT_WEB_UI:$PORT_WEB_UI \
+      #         localstack/localstack:0.12.6
 
       - name: Check if localstack is running or not
         run: docker ps
