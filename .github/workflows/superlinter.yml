@@ -17,26 +17,26 @@ jobs:
           repository: ${{ github.repository }}
           ref: main
           path: |
-            .github/workflows/java-install.yml
+            # .github/workflows/java-install.yml
             .github/workflows/maven.yml
 
-    # install aws localstack
-      - name: Check if aws localstack is cached
-        id: cache-aws-localstack
-        uses: actions/cache@v2
-        with:
-          path:  ~/.cache/aws-localstack
-          key: localstack
+    # # install aws localstack
+    #   - name: Check if aws localstack is cached
+    #     id: cache-aws-localstack
+    #     uses: actions/cache@v2
+    #     with:
+    #       path:  ~/.cache/aws-localstack
+    #       key: localstack
 
-      - name: Run an user define shell script
-        run: |
-          script_path="${GITHUB_WORKSPACE}/start.sh"
-          chmod +x start.sh
-          ./start.sh          script_path="${GITHUB_WORKSPACE}/start.sh"
-          chmod +x start.sh
-          ./start.sh
+    #   - name: Run an user define shell script
+    #     run: |
+    #       script_path="${GITHUB_WORKSPACE}/start.sh"
+    #       chmod +x start.sh
+    #       ./start.sh          script_path="${GITHUB_WORKSPACE}/start.sh"
+    #       chmod +x start.sh
+    #       ./start.sh
 
 
 
-      - name: Check if localstack is running or not
-        run: docker ps
+    #   - name: Check if localstack is running or not
+    #     run: docker ps
